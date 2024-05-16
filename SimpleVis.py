@@ -20,6 +20,13 @@ hsv_image = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 # aplicando media para uniformizar a cor da imagem
 hsv_image_blur = cv2.medianBlur(hsv_image, 3)
 # aplicando mascara de limiarização
+# -----------------------------------------------
+# cor       |   minimo      |     máximo        |
+# bola      |   [19, 1, 1]  |   [22, 255, 255]  |
+# amarelo   |   [26, 1, 1]  |   [32, 255, 255]  |
+# verde     |   [40, 1, 1]  |   [80, 255, 255]  |
+# vermelho  |   [160, 1, 1] |   [179, 255, 255] |
+# -----------------------------------------------
 HSV_Min = (19, 0, 0)
 HSV_Max = (22, 256, 256)
 mask = cv2.inRange(hsv_image_blur, HSV_Min, HSV_Max)
