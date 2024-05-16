@@ -1,0 +1,23 @@
+{
+    "imagem": {
+        "bright" : -74,
+        "contrast" : 39,
+        "ProjTransfCoords" :[[138, 47], [485, 56], [478, 451], [137, 444]]
+    },
+    "ball": {
+        "HSV_Min": [17, 206, 219],
+        "HSV_Max": [22, 241, 228]
+    },
+    "time_amarelo": {
+        "HSV1_Min": [26, 226, 202],
+        "HSV1_Max": [29, 255, 228],
+        "HSV2_Min": [45, 188, 195],
+        "HSV2_Max": [48, 219, 228],
+        "player1_HSV_Min": [152, 240, 186],
+        "player1_HSV_Max": [157, 255, 226],
+        "player2_HSV_Min": [177, 172, 139],
+        "player2_HSV_Max": [179, 193, 181],
+        "player3_HSV_Min": [90, 145, 165],
+        "player3_HSV_Max": [93, 168, 209]
+    }
+}

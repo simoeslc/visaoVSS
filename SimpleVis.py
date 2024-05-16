@@ -2,7 +2,7 @@ import numpy as np
 import cv2 
 from imgTrat import *
 
-img = cv2.imread('imagem4.jpeg', cv2.IMREAD_COLOR)
+img = cv2.imread('imagem1.jpeg', cv2.IMREAD_COLOR)
 
 # corrigindo projeção, 
 # ajuste de escala do campo
