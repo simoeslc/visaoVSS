@@ -59,6 +59,7 @@ for c in cnts:
         cX = int(M["m10"] / M["m00"])
         cY = int(M["m01"] / M["m00"])
         coords.append([cX,cY])
+        print(f'x={cX} y={cY}')
 # Gerando um circulo sobre o objeto identificado
 cv2.circle(img, coords[0], 7, (0, 0, 255), 2)
 cv2.imshow("test", img)
