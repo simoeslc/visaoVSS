@@ -51,6 +51,7 @@ cnts = cv2.findContours(bin_img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 cnts = imutils.grab_contours(cnts)
 # loop over the contornos para identificar objetos
 coords = []
+print(cnts)
 for c in cnts:
     # compute the center of the contour
     print(cv2.contourArea(c))
