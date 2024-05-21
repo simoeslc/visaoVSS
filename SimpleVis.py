@@ -2,14 +2,14 @@ import numpy as np
 import cv2 
 from imgTrat import *
 
-img = cv2.imread('imagem1.jpeg', cv2.IMREAD_COLOR)
+img = cv2.imread('imgs/imagem1.jpeg', cv2.IMREAD_COLOR)
 
 # corrigindo projeção, 
 # ajuste de escala do campo
 # corte de áreas externas 
 imTrat = imgTrat(img)
 img = imTrat.img_ProjTransformation(img)
-cv2.imshow("test", img)
+cv2.imshow("test: Imagem inicial", img)
 cv2.waitKey(0)
 
 ########################
@@ -33,7 +33,7 @@ mask = cv2.inRange(hsv_image_blur, HSV_Min, HSV_Max)
 output = cv2.bitwise_and(img, img, mask = mask)
 # aplicando media para eliminar pontos (ruido)
 output_med = cv2.medianBlur(output, 15)
-cv2.imshow("test", output)
+cv2.imshow("test: mask", output)
 cv2.waitKey(0)
 
 ########################
@@ -44,7 +44,7 @@ gray = cv2.cvtColor(output_med, cv2.COLOR_BGR2GRAY)
 
 # liminarizando a imagem para converter em tons de branco e preto
 bin_img = cv2.threshold(gray, 15, 255, cv2.THRESH_BINARY)[1]
-cv2.imshow("test", bin_img)
+cv2.imshow("test:limiariza", bin_img)
 cv2.waitKey(0)
 # find contours in the thresholded image
 cnts = cv2.findContours(bin_img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -63,5 +63,5 @@ for c in cnts:
         print(f'x={cX} y={cY}')
 # Gerando um circulo sobre o objeto identificado
 cv2.circle(img, coords[0], 7, (0, 0, 255), 2)
-cv2.imshow("test", img)
+cv2.imshow("test: Final", img)
 cv2.waitKey(0)
