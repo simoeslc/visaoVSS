@@ -17,7 +17,7 @@ img = load_image()
 elemento = elementos(img)
 
 posicao_ball = elemento.get_Ball_pos()
-player_red_pose = elemento.get_Player_pos2(img,0)
+player_red_pose = elemento.get_Player_pos(img,0)
 print("Bola: ",posicao_ball)
 print("Player: ",player_red_pose)
 

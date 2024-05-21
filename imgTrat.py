@@ -87,15 +87,8 @@ class elementos:
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY )
         img = cv2.GaussianBlur(gray, (15, 15), 0)
         
-        cv2.imshow("gaussi", img)
-        cv2.waitKey(0)
-      
-      
         img = cv2.threshold(img, 15, 255, cv2.THRESH_BINARY)[1]
         
-        cv2.imshow("limiariza", img)
-        cv2.waitKey(0)
-
         # find contours in the thresholded image
         #cnts = cv2.findContours(img.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         cnts = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -118,44 +111,26 @@ class elementos:
         mask = cv2.inRange(hsv_image, self.Ball_HSV_Min, self.Ball_HSV_Max)
         output = cv2.bitwise_and(self.imagemTrat, self.imagemTrat, mask = mask)
         
-        cv2.imshow("get_ball: mask e medianblue1", output)
-        cv2.waitKey(0)
-
         output_med = cv2.medianBlur(output, 15) # adcionoei 
-
-        cv2.imshow("get_ball: medianblue2", output_med)
-        cv2.waitKey(0)
 
         Ball_Pos = self.obj_position(output_med)
         return Ball_Pos[0]
     
-    ######
     def detectat_posiion_tag(self, hsv_min, hsv_max,):
         hsv_image = cv2.cvtColor(self.imagemTrat, cv2.COLOR_BGR2HSV)
         hsv_image = cv2.medianBlur(hsv_image, 3)
-        cv2.imshow("hsv:", hsv_image)
-        cv2.waitKey(0) 
-
         
         mask = cv2.inRange(hsv_image, hsv_min, hsv_max)
-        
-        cv2.imshow("mask_tag:", mask)
-        cv2.waitKey(0)  
-
+         
         output = cv2.bitwise_and(self.imagemTrat, self.imagemTrat, mask = mask)
 
-        cv2.imshow("output:", output)
-        cv2.waitKey(0) 
-
         output_med = cv2.medianBlur(output, 5)
-
-        cv2.imshow("output_med:", output_med)
-        cv2.waitKey(0) 
 
         posicao = self.obj_position(output_med)
 
         return posicao
-    #########################
+
+
     def localizar_player(self, T1Y_Pos, T1G_Pos, Player_Pos):
         pPoints = np.zeros((3,2))
         pPoints[0] = Player_Pos[0]
@@ -180,7 +155,7 @@ class elementos:
         return p1Pose
 
 
-    def get_Player_pos2(self, imagem, player):
+    def get_Player_pos(self, imagem, player):
 
         T1Y_Pos = self.detectat_posiion_tag(self.T1Y_HSV_Min, self.T1Y_HSV_Max)
         T1G_Pos = self.detectat_posiion_tag(self.T1G_HSV_Min, self.T1G_HSV_Max)
@@ -193,55 +168,3 @@ class elementos:
         pos = self.localizar_player(T1Y_Pos, T1G_Pos, Player_Pos)
 
         return np.int0([pos[0], pos[1]])
-
-
-    def get_Player_pos(self, imagem, player):
-        hsv_image = cv2.cvtColor(self.imagemTrat, cv2.COLOR_BGR2HSV)
-        # mascara de limiarização do time
-        mask_T1Y = cv2.inRange(hsv_image, self.T1Y_HSV_Min, self.T1Y_HSV_Max)
-        mask_T1G = cv2.inRange(hsv_image, self.T1G_HSV_Min, self.T1G_HSV_Max)
-        # mascara de limiarização do jogador
-        mask_Player = cv2.inRange(hsv_image, self.T1Player_HSV_Min[player], self.T1Player_HSV_Max[player])
-        
-        cv2.imshow("mask_player:", mask_Player)
-        cv2.waitKey(0)
-        
-        
-        # Aplicando mascara ao time
-        output_T1Y = cv2.bitwise_and(self.imagemTrat, self.imagemTrat, mask = mask_T1Y)
-       
-        cv2.imshow("output_t1y:", output_T1Y)
-        cv2.waitKey(0)
-       
-        output_T1G = cv2.bitwise_and(self.imagemTrat, self.imagemTrat, mask = mask_T1G)
-        
-        cv2.imshow("output_t1g:", output_T1G)
-        cv2.waitKey(0)
-        
-        # Aplicando mascara ao jogador
-        output_Player = cv2.bitwise_and(self.imagemTrat, self.imagemTrat, mask = mask_Player)
-        # obtendo a posição dos objetos detectados
-        T1Y_Pos = self.obj_position(output_T1Y)
-        T1G_Pos = self.obj_position(output_T1G)
-        Player_Pos = self.obj_position(output_Player)
-        pPoints = np.zeros((3,2))
-        pPoints[0] = Player_Pos[0]
-        #encontrando feixa amarela mais proxima
-        dist_min = 1000
-        for k in T1Y_Pos:
-            if(np.linalg.norm(np.array(pPoints[0]) - k)<dist_min):
-                dist_min=np.linalg.norm(np.array(pPoints[0]) - k)
-                pPoints[1] = k
-        #encontrando feixa verde mais proxima
-        dist_min = 1000
-        for k in T1G_Pos:
-            if(np.linalg.norm(np.array(pPoints[0]) - k)<dist_min):
-                dist_min=np.linalg.norm(np.array(pPoints[0]) - k)
-                pPoints[2] = k
-        p1Pose = np.zeros(3)
-        p1Pose[0] = (pPoints[0,0]+pPoints[1,0]+pPoints[2,0])/3 #coordenada X
-        p1Pose[1] = (pPoints[0,1]+pPoints[1,1]+pPoints[2,1])/3 #coordenada Y
-        #print([T1Y_Pos[0][0],T1Y_Pos[0][1]])
-        p1Pose[2] = np.arctan2((pPoints[1,0]-p1Pose[0]),(pPoints[1,1]-p1Pose[1]))
-        print(np.cos(p1Pose[2]))
-        return p1Pose

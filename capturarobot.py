@@ -15,7 +15,7 @@ img = load_image()
 
 
 elemento = elementos(img)
-player_red_pose = elemento.get_Player_pos2(img,0)
+player_red_pose = elemento.get_Player_pos(img,0)
 print(player_red_pose)
 cv2.circle(img, player_red_pose, 7, (0, 0, 255), 2)
 cv2.imshow("test", img)
