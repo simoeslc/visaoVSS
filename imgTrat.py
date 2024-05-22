@@ -133,7 +133,7 @@ class elementos:
     ######
     def detectat_posiion_tag(self, hsv_min, hsv_max,):
         hsv_image = cv2.cvtColor(self.imagemTrat, cv2.COLOR_BGR2HSV)
-        hsv_image = cv2.medianBlur(hsv_image, 3)
+        hsv_image = cv2.medianBlur(hsv_image, 5)
         cv2.imshow("hsv:", hsv_image)
         cv2.waitKey(0) 
 
@@ -148,7 +148,7 @@ class elementos:
         cv2.imshow("output:", output)
         cv2.waitKey(0) 
 
-        output_med = cv2.medianBlur(output, 5)
+        output_med = cv2.medianBlur(output, 9)
 
         cv2.imshow("output_med:", output_med)
         cv2.waitKey(0) 
