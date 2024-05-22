@@ -91,8 +91,9 @@ class elementos:
         cv2.waitKey(0)
       
       
-        img = cv2.threshold(img, 15, 255, cv2.THRESH_BINARY)[1]
-        
+        #img = cv2.threshold(img, 15, 255, cv2.THRESH_BINARY)[1]
+        limiar, img = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY+cv2.THRESH_OTSU)
+
         cv2.imshow("limiariza", img)
         cv2.waitKey(0)
 
@@ -187,7 +188,7 @@ class elementos:
         Player_Pos = self.detectat_posiion_tag(self.T1Player_HSV_Min[player], self.T1Player_HSV_Max[player])
         
         var = (T1Y_Pos, T1G_Pos,Player_Pos)
-        #return T1G_Pos
+        #return T1Y_Pos
         print(var)
 
         pos = self.localizar_player(T1Y_Pos, T1G_Pos, Player_Pos)
